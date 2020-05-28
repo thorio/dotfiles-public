@@ -1,0 +1,20 @@
+---
+# pcb design
+
+- name: desktop-cad
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - kicad
+          - kicad-library
+          - kicad-library-3d
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - orca-slicer-bin

@@ -1,0 +1,189 @@
+matches:
+  - trigger: didnt
+    replace: "didn't"
+    word: true
+
+  - trigger: arent
+    replace: "aren't"
+    word: true
+
+  - trigger: cant
+    replace: "can't"
+    word: true
+
+  - trigger: dont
+    replace: "don't"
+    word: true
+
+  - trigger: doesnt
+    replace: "doesn't"
+    word: true
+
+  - trigger: couldve
+    replace: "could've"
+    word: true
+
+  - trigger: couldnt
+    replace: "couldn't"
+    word: true
+
+  - trigger: hadnt
+    replace: "hadn't"
+    word: true
+
+  - trigger: hasnt
+    replace: "hasn't"
+    word: true
+
+  - trigger: havent
+    replace: "haven't"
+    word: true
+
+  - trigger: hed
+    replace: "he'd"
+    word: true
+
+  - trigger: hes
+    replace: "he's"
+    word: true
+
+  - trigger: howd
+    replace: "how'd"
+    word: true
+
+  - trigger: howll
+    replace: "how'll"
+    word: true
+
+  - trigger: howre
+    replace: "how're"
+    word: true
+
+  - trigger: hows
+    replace: "how's"
+    word: true
+
+  - trigger: ive
+    replace: "i've"
+    word: true
+
+  - trigger: isnt
+    replace: "isn't"
+    word: true
+
+  - trigger: itd
+    replace: "it'd"
+    word: true
+
+  - trigger: itll
+    replace: "it'll"
+    word: true
+
+  - trigger: its
+    replace: "it's"
+    word: true
+
+  - trigger: lets
+    replace: "let's"
+    word: true
+
+  - trigger: mightve
+    replace: "might've"
+    word: true
+
+  - trigger: mustnt
+    replace: "mustn't"
+    word: true
+
+  - trigger: mustve
+    replace: "must've"
+    word: true
+
+  - trigger: neednt
+    replace: "needn't"
+    word: true
+
+  - trigger: shouldve
+    replace: "should've"
+    word: true
+
+  - trigger: shouldnt
+    replace: "shouldn't"
+    word: true
+
+  - trigger: thatll
+    replace: "that'll"
+    word: true
+
+  - trigger: thats
+    replace: "that's"
+    word: true
+
+  - trigger: thatd
+    replace: "that'd"
+    word: true
+
+  - trigger: thered
+    replace: "there'd"
+    word: true
+
+  - trigger: therell
+    replace: "there'll"
+    word: true
+
+  - trigger: theyd
+    replace: "they'd"
+    word: true
+
+  - trigger: theyll
+    replace: "they'll"
+    word: true
+
+  - trigger: theyre
+    replace: "they're"
+    word: true
+
+  - trigger: theyve
+    replace: "they've"
+    word: true
+
+  - trigger: wasnt
+    replace: "wasn't"
+    word: true
+
+  - trigger: weve
+    replace: "we've"
+    word: true
+
+  - trigger: werent
+    replace: "weren't"
+    word: true
+
+  - trigger: whod
+    replace: "who'd"
+    word: true
+
+  - trigger: whyd
+    replace: "why'd"
+    word: true
+
+  - trigger: wont
+    replace: "won't"
+    word: true
+
+  - trigger: youd
+    replace: "you'd"
+    word: true
+
+  - trigger: youll
+    replace: "you'll"
+    word: true
+
+  - trigger: youre
+    replace: "you're"
+    word: true
+
+  - trigger: youve
+    replace: "you've"
+    word: true
+

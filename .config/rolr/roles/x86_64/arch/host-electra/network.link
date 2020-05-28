@@ -1,0 +1,8 @@
+# Managed by rolr
+[Match]
+MACAddress=d8:43:ae:17:33:af
+
+[Link]
+Name=eth0
+MACAddressPolicy=persistent
+WakeOnLan=magic

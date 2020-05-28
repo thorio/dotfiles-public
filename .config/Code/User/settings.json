@@ -1,0 +1,176 @@
+{
+	//#region formatting
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"files.insertFinalNewline": true,
+
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "vscode.git", // disable formatting
+
+	// language overrides
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features",
+	},
+
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+	},
+
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+	},
+
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features",
+	},
+
+	"[css]": {
+		"editor.defaultFormatter": "vscode.css-language-features",
+	},
+
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features",
+	},
+
+	"[yaml]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+	},
+
+	"[vue]": {
+		"editor.defaultFormatter": "Vue.volar",
+	},
+
+	"[rust]": {
+		"editor.defaultFormatter": "rust-lang.rust-analyzer",
+	},
+
+	// Typescript language features
+	"typescript.format.insertSpaceAfterCommaDelimiter": true,
+	"typescript.format.insertSpaceAfterConstructor": false,
+	"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+	"typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": false,
+	"typescript.format.insertSpaceAfterSemicolonInForStatements": true,
+	"typescript.format.insertSpaceAfterTypeAssertion": false,
+	"typescript.format.insertSpaceBeforeAndAfterBinaryOperators": true,
+	"typescript.format.insertSpaceBeforeFunctionParenthesis": false,
+	"typescript.format.placeOpenBraceOnNewLineForControlBlocks": false,
+	"typescript.format.placeOpenBraceOnNewLineForFunctions": false,
+	"typescript.format.semicolons": "insert",
+	"typescript.preferences.quoteStyle": "double",
+
+	// JSON language features
+	"json.format.keepLines": true,
+	//#endregion
+
+	//#region terminal
+	"terminal.integrated.defaultProfile.windows": "cmder",
+	"terminal.integrated.defaultProfile.linux": "zsh",
+	"terminal.integrated.profiles.windows": {
+		"cmder": {
+			"path": [
+				"${env:windir}\\Sysnative\\cmd.exe",
+				"${env:windir}\\System32\\cmd.exe"
+			],
+			"args": [
+				"/k",
+				"C:\\dev\\cmder\\vendor\\bin\\vscode_init.cmd"
+			]
+		},
+		"cmd": {
+			"path": [
+				"${env:windir}\\Sysnative\\cmd.exe",
+				"${env:windir}\\System32\\cmd.exe"
+			]
+		}
+	},
+	"terminal.integrated.profiles.linux": {
+		"zsh": {
+			"path": "zsh",
+			"args": [
+				"--login"
+			]
+		},
+		"bash": {
+			"path": "bash"
+		}
+	},
+	//#endregion
+
+	//#region behaviour
+	"editor.gotoLocation.multipleDeclarations": "goto",
+	"editor.gotoLocation.multipleDefinitions": "goto",
+	"editor.gotoLocation.multipleTypeDefinitions": "goto",
+	"editor.lightbulb.enabled": "off",
+	"editor.inlayHints.enabled": "offUnlessPressed",
+
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmPasteNative": false,
+
+	"extensions.ignoreRecommendations": true,
+	"files.autoSave": "off",
+	"files.simpleDialog.enable": true,
+	"javascript.suggest.completeFunctionCalls": true,
+	"problems.decorations.enabled": false,
+	"security.workspace.trust.enabled": false,
+	"editor.selectionClipboard": false,
+	"search.quickOpen.includeSymbols": true,
+	//#endregion
+
+	//#region appearance
+	"editor.cursorBlinking": "solid",
+	"editor.cursorSmoothCaretAnimation": "explicit",
+	"editor.renderWhitespace": "selection",
+	"editor.bracketPairColorization.enabled": false,
+
+	"workbench.editor.decorations.badges": false,
+	"workbench.iconTheme": "material-icon-theme",
+	"workbench.startupEditor": "none",
+	"window.titleBarStyle": "native",
+	"window.customTitleBarVisibility": "never",
+
+	"window.zoomLevel": 0,
+	//#endregion
+
+	//#region misc
+	"remote.SSH.remotePlatform": {
+		"chirality": "linux",
+		"checkra1n": "linux",
+		"moment": "linux",
+	},
+	"remote.autoForwardPortsSource": "hybrid",
+	//#endregion
+
+	//#region extensions
+	"todo-tree.highlights.enabled": false,
+	"rust-analyzer.check.command": "clippy",
+	"rust-analyzer.workspace.symbol.search.kind": "all_symbols",
+	"rust-analyzer.lens.implementations.enable": false,
+	"git.mergeEditor": false,
+	"lldb.suppressUpdateNotifications": true,
+	"lldb.showDisassembly": "never",
+	"git.openRepositoryInParentFolders": "never",
+	"markdown.preview.scrollEditorWithPreview": false,
+	"haskell.manageHLS": "PATH",
+	"window.menuBarVisibility": "hidden",
+	"iconify.annotations": false,
+	"redhat.telemetry.enabled": false,
+	//#endregion
+
+	//#region de-shittify
+	"chat.agent.enabled": false,
+	"telemetry.telemetryLevel": "off",
+	"telemetry.feedback.enabled": false,
+	"inlineChat.lineNaturalLanguageHint": false,
+	"workbench.editor.empty.hint": "hidden",
+	"terminal.integrated.initialHint": false,
+	"chat.disableAIFeatures": true,
+	"terminal.integrated.stickyScroll.enabled": false,
+	//#endregion
+}

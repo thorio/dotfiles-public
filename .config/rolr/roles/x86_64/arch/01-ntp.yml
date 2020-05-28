@@ -1,0 +1,19 @@
+---
+# network time protocol client
+
+- name: ntp
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - ntp
+
+    - name: enable ntp service
+      become: true
+      systemd:
+        unit: ntpd
+        enabled: true
+        state: started

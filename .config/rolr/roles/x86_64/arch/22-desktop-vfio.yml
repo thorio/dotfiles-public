@@ -1,0 +1,37 @@
+---
+# VFIO virtualization: GPU in VM
+
+- name: desktop-vfio
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - qemu-full
+          - libvirt
+          - edk2-ovmf
+          - cpupower
+          - tmux
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - looking-glass
+
+    # the git clone is already idempotent, but
+    # - it's slow to check
+    # - would change the checked out ref
+    - name: check if vfio-run was cloned
+      stat:
+        path: ~/repos/vfio-run
+      register: vfio_cloned
+
+    - name: clone vfio-run
+      when: not vfio_cloned.stat.exists
+      git:
+        dest: ~/repos/vfio-run
+        repo: git@github.com:thorio/vfio-run.git
+        version: my-config

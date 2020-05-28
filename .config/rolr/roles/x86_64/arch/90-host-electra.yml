@@ -1,0 +1,112 @@
+---
+# extra config for host electra
+
+- name: host-electra
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - ddcutil
+          - amd-ucode
+          - qt6-multimedia-ffmpeg # for hydrus
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - hydrus
+          - anki-bin
+          - grayjay-bin
+          - opentabletdriver
+          - osu-lazer-bin
+          - vesktop-bin
+
+    - name: install flatpak applications
+      flatpak:
+        name:
+          - org.prismlauncher.PrismLauncher
+
+    # required by ddcutil
+    - name: enable i2c-dev kernel module
+      become: true
+      modprobe:
+        name: i2c-dev
+        persistent: present
+
+    - name: configure X11
+      become: true
+      copy:
+        src: ./host-electra/x11.conf
+        dest: /etc/X11/xorg.conf.d/99-rolr-host-electra.conf
+
+    # see .config/zsh/host/electra.zsh
+    - name: xorg display.conf symlink
+      become: true
+      file:
+        src: /home/thorou/.local/share/X11/display.conf
+        dest: /etc/X11/xorg.conf.d/20-rolr-display.conf
+        state: link
+
+    - name: set ethernet link configuration
+      become: true
+      copy:
+        src: ./host-electra/network.link
+        dest: /etc/systemd/network/50-wired.link
+
+    # pipewire/wireplumber config
+    - name: check if pipewire and wireplumber are installed
+      command: pacman --deptest pipewire wireplumber
+      changed_when: false
+      failed_when: false
+      register: check_pipewire
+
+    - name: configure pipewire
+      when: check_pipewire.rc == 0
+      become: true
+      register: pipewire_config
+      copy:
+        src: ./host-electra/pipewire.conf
+        dest: /etc/pipewire/pipewire.conf.d/99-rolr-host-electra.conf
+
+    - name: configure wireplumber
+      when: check_pipewire.rc == 0
+      become: true
+      register: wireplumber_config
+      copy:
+        src: ./host-electra/wireplumber.conf
+        dest: /etc/wireplumber/wireplumber.conf.d/99-rolr-host-electra.conf
+
+    - name: restart pipewire/wireplumber
+      when: pipewire_config.changed or wireplumber_config.changed
+      systemd:
+        scope: user
+        unit: "{{item}}"
+        state: restarted
+      loop:
+        - pipewire
+        - wireplumber
+
+    - name: copy vfio desktop files
+      copy:
+        src: ./host-electra/{{item}}
+        dest: ~/.local/share/applications/
+        mode: "755"
+      loop:
+        - taurine-full.desktop
+        - taurine-slim.desktop
+        - novalectra.desktop
+
+    - name: install monitor source switch service
+      become: true
+      copy:
+        src: ./host-electra/switch-source.service
+        dest: /usr/lib/systemd/system/rolr-host-electra-switch-source.service
+
+    - name: enable monitor source switch service
+      become: true
+      systemd:
+        unit: rolr-host-electra-switch-source
+        enabled: true

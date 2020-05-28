@@ -1,0 +1,32 @@
+[merge]
+	conflictstyle = diff3
+
+[user]
+	email = thorou@chirality.de
+	name = thorou
+
+[pager]
+	branch = false
+
+[init]
+	defaultBranch = master
+
+[credential]
+	helper = manager
+
+[advice]
+	detachedHead = false
+	statusHints = false
+
+[pull]
+	rebase = true
+
+[include]
+	path = machine.gitconfig
+	path = delta.gitconfig
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f

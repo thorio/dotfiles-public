@@ -1,0 +1,41 @@
+---
+# zsh and common utilities
+
+- name: shell
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      apt:
+        pkg:
+          - zsh
+          - curl
+          - wget
+          - git
+          - vim
+          - grep
+          - fzf
+          - gzip
+          - htop
+          - bat
+          - exa
+
+    - name: install .deb packages
+      become: true
+      apt:
+        deb: "{{item}}"
+      loop:
+        # TODO: when trixie releases, use package from repos
+        - https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_arm64.deb
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: set user's shell to zsh
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        shell: /bin/zsh

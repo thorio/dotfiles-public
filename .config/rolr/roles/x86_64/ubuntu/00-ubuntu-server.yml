@@ -1,0 +1,24 @@
+---
+# ubuntu-server de-bloating
+
+- name: ubuntu server
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: purge packages
+      become: true
+      apt:
+        pkg:
+          - cloud-init
+          - snapd
+          - unattended-upgrades
+        state: absent
+        purge: true
+        autoremove: true
+
+      # silence the login spam
+    - name: clear motd
+      become: true
+      file:
+        path: /etc/update-motd.d
+        state: absent

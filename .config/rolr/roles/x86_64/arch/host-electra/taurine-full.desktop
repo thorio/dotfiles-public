@@ -1,0 +1,7 @@
+# Managed by rolr
+
+[Desktop Entry]
+Name=Taurine Full
+Exec=tmux new -s vm 'sudo -v && tmux detach && $(sleep 1; looking-glass-client -F &> /dev/null) & sudo ~/repos/vfio-run/target/debug/vfio-run run game -c full -g passthrough -s'
+Terminal=true
+Type=Application

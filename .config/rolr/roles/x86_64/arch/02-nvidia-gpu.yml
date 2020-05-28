@@ -1,0 +1,39 @@
+---
+# nvidia drivers
+
+- name: nvidia-gpu
+  gather_facts: false
+  hosts: all
+  tasks:
+    # check if there's already a different nvidia driver package installed
+    - name: check if nvidia drivers are installed
+      command: pacman --deptest nvidia
+      changed_when: false
+      failed_when: false
+      register: check_nvidia
+
+    - name: install nvidia drivers
+      when: check_nvidia.rc == 1
+      become: true
+      pacman:
+        pkg:
+          - nvidia
+
+    - name: install nvidia-utils
+      become: true
+      pacman:
+        pkg:
+          - nvidia-utils
+
+    - name: check if multilib repository is enabled
+      command: pacman -Sl multilib
+      changed_when: false
+      failed_when: false
+      register: check_multilib
+
+    - name: install 32bit packages
+      become: true
+      when: check_multilib.rc == 0
+      pacman:
+        pkg:
+          - lib32-nvidia-utils

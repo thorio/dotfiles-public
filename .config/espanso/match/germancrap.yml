@@ -1,0 +1,24 @@
+matches:
+  - trigger: "`a"
+    replace: ä
+
+  - trigger: ~A
+    replace: Ä
+
+  - trigger: "`o"
+    replace: ö
+
+  - trigger: ~O
+    replace: Ö
+
+  - trigger: "`u"
+    replace: ü
+
+  - trigger: ~U
+    replace: Ü
+
+  - trigger: "`s"
+    replace: ß
+
+  - trigger: "`e"
+    replace: €

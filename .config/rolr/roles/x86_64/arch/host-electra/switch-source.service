@@ -1,0 +1,10 @@
+[Unit]
+Description=Set Monitor to HDMI2 Source via DDC/CI
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ddcutil --sleep-multiplier 0.1 --noverify --bus 0 setvcp 60 18
+
+[Install]
+WantedBy=multi-user.target

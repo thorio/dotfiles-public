@@ -1,0 +1,21 @@
+---
+# extra config for host chirality
+
+- name: host-chirality
+  gather_facts: false
+  hosts: all
+  tasks:
+    # fixes issues with Plex transcoding for large libraries
+    - name: apply kernel parameters
+      become: true
+      sysctl:
+        name: fs.inotify.max_user_watches
+        value: 32768
+        sysctl_file: /etc/sysctl.d/99-rolr-chirality.conf
+
+    - name: install packages
+      become: true
+      apt:
+        pkg:
+          - intel-gpu-tools
+          - nfs-common

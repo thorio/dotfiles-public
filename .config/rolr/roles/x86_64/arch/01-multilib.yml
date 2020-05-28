@@ -1,0 +1,35 @@
+---
+# enable repo for 32bit packages
+
+- name: aur
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: check if multilib repository is enabled
+      command: pacman -Sl multilib
+      changed_when: false
+      failed_when: false
+      register: check_multilib
+
+    - name: enable multilib
+      when: check_multilib.rc != 0
+      block:
+        - name: enable multilib
+          become: true
+          lineinfile:
+            dest: /etc/pacman.conf
+            line: "[multilib]"
+            regexp: "^#\\[multilib\\]"
+
+        - name: enable multilib
+          become: true
+          lineinfile:
+            dest: /etc/pacman.conf
+            line: "Include = /etc/pacman.d/mirrorlist"
+            insertafter: "^\\[multilib\\]"
+            regexp: "Include = /etc/pacman.d/mirrorlist"
+
+        - name: update package database
+          become: true
+          pacman:
+            update_cache: true

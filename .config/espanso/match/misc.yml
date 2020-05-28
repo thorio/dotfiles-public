@@ -1,0 +1,25 @@
+matches:
+  - trigger: "!?"
+    replace: ‽
+
+  - trigger: "?!"
+    replace: ‽
+
+  - trigger: minigolf
+    replace: minigold
+
+  - trigger: "::tm"
+    replace: "™"
+    word: true
+
+  - trigger: "fun::tm"
+    replace: "fun™"
+    word: true
+
+  - trigger: "::details"
+    replace: |
+      <details>
+      <summary>$|$</summary>
+
+
+      </details>

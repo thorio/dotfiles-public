@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "~/.config",
+		},
+	],
+	"settings": {
+		"files.exclude": {
+			"xmonad/**/*.{hi,o}": true,
+			"xmonad/lib": true,
+			"zsh/**/*.antigen-compat": true,
+			"zsh/**/*.zwc": true,
+		},
+		"files.associations": {
+			"**/rolr/**/*.yml": "ansible"
+		},
+		"ansible.python.interpreterPath": "/bin/python",
+		"ansible.validation.lint.arguments": "-x no-handler -x yaml[line-length] -x yaml[comments] -x command-instead-of-module -x name[casing] -x fqcn[action-core]"
+	},
+	"extensions": {
+		"recommendations": [
+			"gruntfuggly.todo-tree",
+			"haskell.haskell",
+			"mads-hartmann.bash-ide-vscode",
+			"mikestead.dotenv",
+			"redhat.ansible",
+			"shardulm94.trailing-spaces",
+			"Tyriar.sort-lines",
+		]
+	},
+}

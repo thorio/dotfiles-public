@@ -1,0 +1,16 @@
+---
+# IME input
+
+- name: desktop-fcitx
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - fcitx5
+          - fcitx5-mozc
+          - fcitx5-qt
+          - fcitx5-gtk
+          - fcitx5-configtool

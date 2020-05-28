@@ -1,0 +1,40 @@
+---
+# ubuntu-server additional de-bloating
+
+- name: extra debloating
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: purge packages
+      become: true
+      apt:
+        pkg:
+          - landscape-common
+          - thin-provisioning-tools
+          - apparmor
+          - avahi-daemon
+          - command-not-found
+          - gdisk
+          - fwupd
+          - manpages
+          - needrestart
+          - secureboot-db
+          - slirp4netns
+          - plymouth
+        state: absent
+        purge: true
+        autoremove: true
+
+    - name: disable apport
+      become: true
+      systemd:
+        unit: apport
+        state: stopped
+        enabled: false
+        masked: true
+
+    - name: disable man-db auto updates
+      become: true
+      file:
+        path: /var/lib/man-db/auto-update
+        state: absent

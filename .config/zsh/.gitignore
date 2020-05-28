@@ -1,0 +1,8 @@
+*.zwc
+*.antigen-compat
+
+.z
+.zcompdump
+.zsh_history
+
+.zkbd/

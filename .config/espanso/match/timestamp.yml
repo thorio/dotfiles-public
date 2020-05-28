@@ -1,0 +1,80 @@
+matches:
+  - trigger: ":date"
+    replace: "{{date}}"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%y"
+
+  - trigger: ":ldate"
+    replace: "{{date}}"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%d.%m.%Y"
+
+  - trigger: ":sdate"
+    replace: "{{date}}"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%y%m%d"
+
+  - trigger: ":ndate"
+    replace: "{{date}}"
+    vars:
+      - name: date
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  - trigger: ":time"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%H:%M"
+
+  - trigger: ":stime"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%H%M"
+
+  - trigger: ":ltime"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%H:%M:%S"
+
+  - trigger: ":ts"
+    replace: "{{stamp}}"
+    vars:
+      - name: stamp
+        type: date
+        params:
+          format: "%Y-%m-%dT%H:%M:%S"
+
+  - trigger: ":uts"
+    replace: "{{stamp}}"
+    vars:
+      - name: stamp
+        type: date
+        params:
+          format: "%s"
+
+  - trigger: ":tagver"
+    replace: "v{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%Y.%m.%d"

@@ -1,0 +1,26 @@
+---
+# additional shell utilities
+
+- name: shell-utils
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - sshuttle
+          - rsync
+          - p7zip
+          - ranger
+          - git-lfs
+          - dos2unix
+          - ncdu
+          - tmux
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - czkawka-cli-bin
+          - massren

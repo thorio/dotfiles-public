@@ -1,0 +1,18 @@
+hotkeys:
+  - binding: A-<Space>
+    action: show_hide
+
+frontend:
+  config:
+    behaviour:
+      auto_hide: false
+      start_hidden: true
+
+providers:
+  - plugin: calculator
+  - plugin: program
+  - plugin: system
+  - plugin: kill
+    keyword: k
+  - plugin: exec
+    keyword: ">"

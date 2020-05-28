@@ -1,0 +1,69 @@
+---
+# sets up host for klipperscreen
+
+- name: desktop-kiosk
+  gather_facts: true
+  hosts: all
+  tasks:
+    - name: install docker packages
+      become: true
+      apt:
+        install_recommends: false
+        pkg:
+          - xserver-xorg
+          - x11-xserver-utils
+          - xinit
+          - xinput
+          - feh
+
+    - name: add screen user
+      become: true
+      user:
+        name: screen
+        uid: 2001
+        system: true
+        group: nogroup
+        groups:
+          - video
+          - tty
+          - input
+        shell: /bin/nologin
+
+    - name: add udev rules for backlight
+      become: true
+      copy:
+        src: ./desktop-kiosk/udev.rules
+        mode: "0644"
+        dest: /etc/udev/rules.d/99-rolr-desktop-kiosk.rules
+
+    - name: create screen service dir
+      become: true
+      file:
+        path: /opt/screen/
+        mode: "0755"
+        state: directory
+
+    - name: install screen service files
+      become: true
+      copy:
+        src: ./desktop-kiosk/{{ item }}
+        mode: "0644"
+        dest: /opt/screen/{{ item }}
+      loop:
+        - screen.service
+        - init.sh
+        - wallpaper.png
+
+    - name: install screen service
+      become: true
+      file:
+        src: /opt/screen/screen.service
+        dest: /usr/lib/systemd/system/screen.service
+        state: link
+
+    - name: start and enable screen service
+      become: true
+      systemd:
+        unit: screen
+        state: started
+        enabled: true

@@ -1,0 +1,7 @@
+auto_restart: true
+show_notifications: false
+disable_x11_fast_inject: false
+
+toggle_key: "OFF"
+search_shortcut: off
+search_trigger: off

@@ -1,0 +1,59 @@
+---
+# pipewire and related components
+
+- name: desktop-audio
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install pipewire and adapters
+      become: true
+      pacman:
+        pkg:
+          - pipewire
+          - pipewire-audio
+          - pipewire-pulse
+          - pipewire-jack
+          - pamixer
+          - wireplumber
+          - qpwgraph
+
+    - name: start and enable pipewire
+      systemd:
+        scope: user
+        unit: "{{item}}"
+        state: started
+        enabled: true
+      loop:
+        - pipewire
+        - pipewire-pulse
+        - wireplumber
+
+    - name: configure pipewire
+      become: true
+      register: pipewire_config
+      copy:
+        src: ./desktop-audio/pipewire.conf
+        dest: /etc/pipewire/pipewire.conf.d/90-rolr-desktop-audio.conf
+
+    - name: create wireplumber wireplumber.conf.d
+      become: true
+      file:
+        path: /etc/wireplumber/wireplumber.conf.d
+        state: directory
+
+    - name: configure wireplumber
+      become: true
+      register: wireplumber_config
+      copy:
+        src: ./desktop-audio/wireplumber.conf
+        dest: /etc/wireplumber/wireplumber.conf.d/90-rolr-desktop-audio.conf
+
+    - name: restart pipewire/wireplumber
+      when: pipewire_config.changed or wireplumber_config.changed
+      systemd:
+        scope: user
+        unit: "{{item}}"
+        state: restarted
+      loop:
+        - pipewire
+        - wireplumber

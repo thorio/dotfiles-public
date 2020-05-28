@@ -1,0 +1,58 @@
+---
+# docker and docker-compose
+
+- name: docker
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - docker
+          - docker-compose
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: create docker group
+      become: true
+      ansible.builtin.group:
+        name: docker
+
+    - name: add current user to docker group
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        groups: docker
+        append: true
+
+    - name: start and enable dockerd
+      become: true
+      systemd:
+        unit: docker
+        state: started
+        enabled: true
+
+    - name: check if nvidia drivers are installed
+      command: pacman --deptest nvidia
+      changed_when: false
+      failed_when: false
+      register: check_nvidia
+
+    - name: install nvidia container toolkit
+      when: check_nvidia.rc == 0
+      register: install_nvidia_toolkit
+      become: true
+      pacman:
+        pkg:
+          - nvidia-container-toolkit
+
+    - name: restart dockerd
+      when: install_nvidia_toolkit.changed
+      become: true
+      systemd:
+        unit: docker
+        state: restarted

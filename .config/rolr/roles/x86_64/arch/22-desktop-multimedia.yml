@@ -1,0 +1,29 @@
+---
+# editing, muxing, transcoding etc.
+
+- name: desktop-multimedia
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - mkvtoolnix-gui
+          - handbrake
+          - avidemux-qt
+          - yt-dlp
+          - audacity
+          - kdenlive
+          - evince
+          - imagemagick
+          - aegisub
+          - obs-studio
+          - inkscape
+          - picard
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - mkvextract-gtk

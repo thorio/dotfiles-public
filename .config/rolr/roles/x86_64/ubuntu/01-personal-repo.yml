@@ -1,0 +1,25 @@
+---
+# personal repository; https://thorio.github.io/apt/
+
+- name: personal-repo
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: get architecture
+      command: dpkg --print-architecture
+      register: architecture
+      changed_when: false
+
+    - name: add thorio signing key
+      become: true
+      get_url:
+        url: "https://thorio.github.io/apt/gpg"
+        dest: /etc/apt/keyrings/thorio-personal-repo.asc
+        mode: "644"
+
+    - name: Add thorio repository to apt sources
+      become: true
+      apt_repository:
+        filename: thorio-personal-repo
+        repo: deb [arch={{ architecture.stdout }} signed-by=/etc/apt/keyrings/thorio-personal-repo.asc] https://thorio.github.io/apt/debian generic main
+        update_cache: true

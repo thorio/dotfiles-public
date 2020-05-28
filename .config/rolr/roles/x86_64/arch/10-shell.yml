@@ -1,0 +1,32 @@
+---
+# zsh and common utilities
+
+- name: shell
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - zsh
+          - wget
+          - git
+          - git-delta
+          - vim
+          - fzf
+          - htop
+          - eza
+          - bat
+          - gnupg
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: set user's shell to zsh
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        shell: /bin/zsh

@@ -1,0 +1,9 @@
+[general]
+import = ["~/.config/alacritty/alacritty.toml"]
+
+[font]
+size = 10.5
+
+[terminal.shell]
+program = "cmd"
+args = ["/k", "C:/dev/cmder/vendor/init.bat"]

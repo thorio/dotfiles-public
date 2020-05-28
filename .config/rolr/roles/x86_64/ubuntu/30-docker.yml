@@ -1,0 +1,57 @@
+---
+# docker and docker-compose
+
+- name: docker
+  gather_facts: true
+  hosts: all
+  tasks:
+    - name: get architecture
+      command: dpkg --print-architecture
+      register: architecture
+      changed_when: false
+
+    - name: add docker signing key
+      become: true
+      get_url:
+        url: "https://download.docker.com/linux/ubuntu/gpg"
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "644"
+
+    - name: Add docker repository to apt sources
+      become: true
+      apt_repository:
+        filename: docker-stable
+        repo: deb [arch={{ architecture.stdout }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
+        update_cache: true
+
+    - name: install docker packages
+      become: true
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+
+    - name: install/update docker-compose
+      become: true
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: "755"
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: create docker group
+      become: true
+      ansible.builtin.group:
+        name: docker
+
+    - name: add current user to docker group
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        groups: docker
+        append: true

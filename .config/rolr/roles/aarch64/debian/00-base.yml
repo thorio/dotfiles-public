@@ -1,0 +1,12 @@
+---
+# needed on any system
+
+- name: base
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      apt:
+        pkg:
+          - usbutils

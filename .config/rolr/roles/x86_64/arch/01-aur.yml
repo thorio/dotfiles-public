@@ -1,0 +1,72 @@
+---
+# setup the aura package manager for the AUR
+
+- name: aur
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - base-devel
+
+    - name: disable debug packages for makepkg
+      become: true
+      replace:
+        path: /etc/makepkg.conf
+        replace: "\\g<1> !debug "
+        regexp: '(^OPTIONS.*) debug '
+
+    - name: set makepkg makeflags
+      become: true
+      lineinfile:
+        dest: /etc/makepkg.conf
+        line: 'MAKEFLAGS="-j$(nproc)"'
+        regexp: "MAKEFLAGS="
+
+    - name: set makepkg zstd compression options
+      become: true
+      lineinfile:
+        dest: /etc/makepkg.conf
+        line: 'COMPRESSZST=(zstd -c -T0 --fast -1 -)'
+        regexp: "COMPRESSZST="
+
+    - name: check if aura is installed
+      command: which aura
+      changed_when: false
+      failed_when: false
+      register: check_aura
+
+    - name: install aura
+      when: check_aura.rc != 0
+      block:
+        - name: clone aura-bin repo
+          git:
+            repo: https://aur.archlinux.org/aura-bin.git
+            dest: /tmp/rolr-aura-bin
+
+        - name: install aura
+          command:
+            chdir: /tmp/rolr-aura-bin
+            cmd: makepkg -i --noconfirm
+
+        - name: cleanup aura-bin repo
+          file:
+            path: /tmp/rolr-aura-bin
+            state: absent
+
+    - name: reinstall rolr from AUR
+      block:
+        - name: uninstall rolr
+          become: true
+          pacman:
+            pkg:
+              - rolr
+            state: absent
+
+        - name: install rolr
+          become: true
+          aura:
+            pkg:
+              - rolr-bin

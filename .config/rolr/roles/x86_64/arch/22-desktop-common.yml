@@ -1,0 +1,76 @@
+---
+# common desktop applications
+
+- name: desktop-common
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: check if pipewire is installed
+      command: which pipewire
+      changed_when: false
+
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - thunderbird
+          - obsidian
+          - noto-fonts-cjk
+          - mpv
+          - nemo
+          - xdg-desktop-portal-gtk
+          - flatpak
+          - ntfs-3g
+          - sshfs
+          - libreoffice-still
+          - filezilla
+          - torbrowser-launcher
+
+    - name: install flatpak applications
+      flatpak:
+        name:
+          - com.github.tchx84.Flatseal
+          - com.plexamp.Plexamp
+          - tv.plex.PlexDesktop
+
+    - name: install librewolf gpg key
+      command: gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 662E3CDD6FE329002D0CA5BB40339DD82B12EF16
+      register: librewolf_gpg
+      changed_when: '"imported: " in librewolf_gpg.stderr'
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - librewolf-bin
+          - schildichat-desktop-bin
+          - visual-studio-code-bin
+          - github-desktop-bin
+
+    # stupid fix for flatpak not mounting system themes
+    - name: copy theme (i hate this)
+      synchronize:
+        src: /usr/share/themes/Materia-dark-compact
+        dest: ~/.local/share/themes/
+        delete: true
+        links: true
+
+    # some applications won't pick up the theme without this, e.g. Flatseal
+    - name: symlink ~/.themes => ~/.local/share/themes
+      file:
+        src: .local/share/themes/
+        dest: ~/.themes
+        state: link
+
+    - name: create cursor theme dir
+      file:
+        path: ~/.local/share/icons/default
+        state: directory
+
+    # stupid fix for flatpak not mounting system themes
+    - name: copy cursor theme (i hate this)
+      synchronize:
+        src: /usr/share/icons/sunset-cursors
+        dest: ~/.local/share/icons/default
+        delete: true
+        links: true

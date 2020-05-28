@@ -1,0 +1,85 @@
+---
+# extra config for most hosts
+
+- name: host-common
+  gather_facts: true
+  hosts: all
+  tasks:
+    - name: add system environment variables
+      become: true
+      blockinfile:
+        marker: "# {mark} ROLR MANAGED"
+        block: "{{ lookup('ansible.builtin.file', './host-' ~ ansible_hostname ~ '/system.env') }}"
+        path: /etc/environment
+        backup: true
+        # debian 12 stil doesn't support this
+        # prepend_newline: true
+
+    - name: configure sshd
+      register: sshd_config
+      become: true
+      copy:
+        src: ./host-{{ ansible_hostname }}/sshd.conf
+        mode: "0644"
+        dest: /etc/ssh/sshd_config.d/90-rolr-host-{{ ansible_hostname }}.conf
+
+    - name: restart sshd
+      when: sshd_config.changed
+      become: true
+      systemd:
+        unit: ssh
+        state: restarted
+
+    # docker users, configs
+    - name: add container group
+      become: true
+      group:
+        name: container
+        gid: 2000
+
+    - name: add container user
+      become: true
+      user:
+        name: container
+        uid: 2000
+        group: container
+        create_home: false
+        shell: /bin/nologin
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+    - name: add current user to container group
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        groups: container
+        append: true
+
+    - name: configure docker daemon
+      register: docker_config
+      become: true
+      copy:
+        src: ./host-{{ ansible_hostname }}/docker-daemon.json
+        mode: "0644"
+        dest: /etc/docker/daemon.json
+
+    - name: restart docker daemon
+      become: true
+      when: docker_config.changed
+      systemd:
+        unit: docker
+        state: restarted
+
+    # app worktree
+    - name: check if app worktree is set up
+      stat:
+        path: ~/app
+      register: worktree_present
+
+    - name: setup app worktree
+      when: not worktree_present.stat.exists
+      changed_when: true
+      command: git --git-dir=$HOME/.local/share/dotfiles.git/ --work-tree=$HOME worktree add ~/app docker/{{ ansible_hostname }}

@@ -1,0 +1,65 @@
+---
+# xmonad-based desktop environment
+
+- name: desktop
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - xorg-server
+          - xorg-xinit
+          - xorg-xinput
+          - xorg-xmessage
+          - xorg-xrandr
+          - xorg-xsetroot
+          - arandr
+          - autorandr
+          - xmonad
+          - xmonad-contrib
+          - xmobar
+          - dmenu
+          - slock
+          - feh
+          - picom
+          - trayer
+          - dunst
+          - alacritty
+          - flameshot
+          - xss-lock
+          - redshift
+          - fuse2 # for appimages
+          - noto-fonts
+          - noto-fonts-emoji
+          - materia-gtk-theme
+          - kvantum # theme engine so qt can use materia
+          - kvantum-theme-materia
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - espanso-x11-bin
+          - ttf-ms-fonts
+          - sunset-cursors-git
+          - gravel-bin
+          - rism-bin
+
+    - name: create xmonad cache dir
+      file:
+        path: ~/.cache/xmonad
+        state: directory
+
+    - name: create xmonad data dir
+      register: xmonad_data
+      file:
+        path: ~/.local/share/xmonad
+        state: directory
+
+    - name: refresh font cache
+      # technically incorrect; the relevant font is cloned with the dotfiles repo
+      # but close enough ¯\_(ツ)_/¯
+      when: xmonad_data.changed
+      command: fc-cache

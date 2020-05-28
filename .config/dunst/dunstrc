@@ -1,0 +1,19 @@
+[global]
+	origin = top-right
+	offset = 0x20
+	width = 300
+    frame_width = 0
+    separator_color = "#7aa6da"
+    show_indicators = false
+
+[urgency_low]
+    background = "#202020"
+    foreground = "#888888"
+
+[urgency_normal]
+    background = "#202020"
+    foreground = "#e8e6e3"
+
+[urgency_critical]
+    background = "#202020"
+    foreground = "#e8e6e3"

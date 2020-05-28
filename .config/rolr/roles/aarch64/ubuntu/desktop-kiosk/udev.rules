@@ -1,0 +1,2 @@
+# managed by rolr
+ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="10-0045", RUN+="/bin/sh -c '/bin/chmod 666 /sys/class/backlight/%k/brightness'"

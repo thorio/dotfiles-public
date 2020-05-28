@@ -1,0 +1,10 @@
+hotkeys:
+  - binding: C-S-<Space>
+    action: show_hide
+
+providers:
+  - plugin: websearch
+    keyword: t
+    config:
+      url_pattern: "https://example.com/issue/{}"
+      subtitle: Open Ticket

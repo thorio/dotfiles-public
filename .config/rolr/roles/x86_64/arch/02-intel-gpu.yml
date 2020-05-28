@@ -1,0 +1,18 @@
+---
+# intel drivers and config
+
+- name: intel-gpu
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - xf86-video-intel
+
+    - name: configure xorg
+      become: true
+      copy:
+        src: ./intel-gpu/xorg.conf
+        dest: /etc/X11/xorg.conf.d/20-rolr-intel-gpu.conf

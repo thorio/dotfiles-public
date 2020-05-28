@@ -1,0 +1,30 @@
+---
+# needed on any system
+
+- name: base
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: enable pacman parallel downloads
+      become: true
+      lineinfile:
+        dest: /etc/pacman.conf
+        line: "ParallelDownloads = 5"
+        regexp: "ParallelDownloads ="
+
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - inetutils
+          - net-tools
+          - pacman-contrib
+          - reflector
+          - vim
+
+    - name: symlink vi => vim
+      file:
+        src: /usr/bin/vim
+        dest: /usr/bin/vi
+        state: link
+      become: true

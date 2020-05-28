@@ -1,0 +1,30 @@
+---
+# steam, heroic launcher etc.
+
+- name: desktop-gaming
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: check if vulkan driver is installed
+      command: pacman --deptest vulkan-driver
+      changed_when: false
+
+    - name: check if 32bit vulkan driver is installed
+      command: pacman --deptest lib32-vulkan-driver
+      changed_when: false
+
+    - name: install packages
+      become: true
+      pacman:
+        pkg:
+          - steam
+          - mangohud
+          - freetype2 # wine complains sometimes if these are missing
+          - lib32-freetype2
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - heroic-games-launcher-bin
+          - protonup-qt-bin

@@ -1,0 +1,25 @@
+---
+# touchpad gestures
+
+- name: desktop-laptop
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - libinput-gestures
+
+    - name: get current user
+      command: whoami
+      register: current_user
+      changed_when: false
+
+      # required for libinput-gestures
+    - name: add current user to input group
+      become: true
+      user:
+        name: "{{ current_user.stdout }}"
+        groups: input
+        append: true

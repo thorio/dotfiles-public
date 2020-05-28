@@ -1,0 +1,49 @@
+---
+# bluez and related components
+
+- name: desktop-bluetooth
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install bluez
+      become: true
+      pacman:
+        pkg:
+          - bluez
+          - bluez-utils
+
+    - name: install bluetuith
+      become: true
+      aura:
+        pkg:
+          - bluetuith-bin
+
+    - name: enable bluetooth service
+      become: true
+      systemd:
+        unit: bluetooth
+        enabled: true
+        state: started
+
+    - name: check if wireplumber is installed
+      command: pacman --deptest wireplumber
+      changed_when: false
+      failed_when: false
+      register: check_wireplumber
+
+    - name: configure wireplumber for bluetooth
+      when: check_wireplumber.rc == 0
+      block:
+        - name: disable HSP/HFP # "Handsfree" low quality bs
+          become: true
+          register: wireplumber_config
+          copy:
+            src: ./desktop-bluetooth/wireplumber.conf
+            dest: /etc/wireplumber/wireplumber.conf.d/90-rolr-desktop-bluetooth.conf
+
+        - name: restart wireplumber
+          when: wireplumber_config.changed
+          systemd:
+            scope: user
+            unit: wireplumber
+            state: restarted

@@ -1,0 +1,5 @@
+matches:
+  - trigger: "@tho"
+    replace: thorou@chirality.de
+
+  # other emails redacted

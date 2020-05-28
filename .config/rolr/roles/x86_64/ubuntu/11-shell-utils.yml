@@ -1,0 +1,15 @@
+---
+# additional shell utilities
+
+- name: shell-utils
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      apt:
+        pkg:
+          - sshuttle
+          - ranger
+          - unzip
+          - ncdu
