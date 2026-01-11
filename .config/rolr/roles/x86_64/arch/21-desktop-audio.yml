@@ -20,7 +20,7 @@
     - name: start and enable pipewire
       systemd:
         scope: user
-        unit: "{{item}}"
+        unit: "{{ item }}"
         state: started
         enabled: true
       loop:
@@ -52,7 +52,7 @@
       when: pipewire_config.changed or wireplumber_config.changed
       systemd:
         scope: user
-        unit: "{{item}}"
+        unit: "{{ item }}"
         state: restarted
       loop:
         - pipewire

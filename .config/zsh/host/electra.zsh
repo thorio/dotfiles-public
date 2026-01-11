@@ -43,6 +43,10 @@ EOF
 			echo $amdgpu >> $conf
 			ddcutil_set_source 18 &
 			;;
+		fat)
+			echo $nvidia >> $conf
+			ddcutil_set_source 15 &
+			;;
 		*)
 			echo "invalid configuration"
 			return

@@ -11,6 +11,7 @@
         pkg:
           - docker
           - docker-compose
+          - docker-buildx
 
     - name: get current user
       command: whoami

@@ -1,0 +1,42 @@
+---
+# install the zfs file system
+
+- name: zfs
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install openzfs gpg keys
+      command: gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 4F3BA9AB6D1F8D683DC2DFB56AD860EED4598027 C33DF142657ED1F7C328A2960AB9E991C6AF658B
+      register: openzfs_gpg
+      changed_when: '"imported: " in openzfs_gpg.stderr'
+
+    - name: install AUR packages
+      become: true
+      aura:
+        pkg:
+          - zfs-utils
+          - zfs-dkms
+
+    - name: enable zfs mkinitcpio hook
+      become: true
+      register: zfs_mkinitcpio
+      copy:
+        dest: /etc/mkinitcpio.conf.d/99-rolr-zfs.conf
+        content: HOOKS+=(zfs)
+
+    - name: regenerate initramfs
+      become: true
+      when: zfs_mkinitcpio.changed
+      command: mkinitcpio -P
+
+    - name: start and enable zfs services
+      become: true
+      systemd:
+        unit: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - zfs.target
+        - zfs-import.target
+        - zfs-import-cache
+        - zfs-mount

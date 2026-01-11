@@ -83,7 +83,7 @@
       when: pipewire_config.changed or wireplumber_config.changed
       systemd:
         scope: user
-        unit: "{{item}}"
+        unit: "{{ item }}"
         state: restarted
       loop:
         - pipewire
@@ -91,7 +91,7 @@
 
     - name: copy vfio desktop files
       copy:
-        src: ./host-electra/{{item}}
+        src: ./host-electra/{{ item }}
         dest: ~/.local/share/applications/
         mode: "755"
       loop:
@@ -99,14 +99,43 @@
         - taurine-slim.desktop
         - novalectra.desktop
 
-    - name: install monitor source switch service
+    - name: install systemd units
       become: true
       copy:
-        src: ./host-electra/switch-source.service
-        dest: /usr/lib/systemd/system/rolr-host-electra-switch-source.service
+        src: "{{ item }}"
+        dest: /usr/lib/systemd/system/
+      with_fileglob:
+        - ./host-electra/systemd-units/*
 
-    - name: enable monitor source switch service
+    - name: enable systemd units
       become: true
       systemd:
-        unit: rolr-host-electra-switch-source
+        unit: "{{ item }}"
         enabled: true
+      loop:
+        - rolr-host-electra-switch-source.service
+        - zfs-scrub-monthly@storage.timer
+        - zfs-trim-weekly@storage.timer
+
+    - name: apply zfs kernel parameters
+      become: true
+      modprobe:
+        name: zfs
+        params: zfs_arc_min=268435456 zfs_arc_max=8589934592
+        persistent: present
+
+    # container user for mounted NAS filesystems
+    - name: add container group
+      become: true
+      group:
+        name: container
+        gid: 2000
+
+    - name: add container user
+      become: true
+      user:
+        name: container
+        uid: 2000
+        group: container
+        create_home: false
+        shell: /bin/nologin

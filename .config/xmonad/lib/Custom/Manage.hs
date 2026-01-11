@@ -36,7 +36,7 @@ hook = composeAll
         className =? "Code" --> doShiftAndView Workspaces.secondary,
         appName =? "schildichat" --> doShiftAndView Workspaces.chat,
         className =? "librewolf" <&&> appName =? "Navigator" --> doShiftAndView Workspaces.web,
-        className =? "Plex" --> doShiftAndView Workspaces.secondary
+        className =? "Plex" --> doShiftAndView Workspaces.secondary <+> doFullFloat
     ]
 
 (==>) :: (Monad m, Monoid a, Monoid (m a)) => m Bool -> [m a] -> m a

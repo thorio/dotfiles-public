@@ -1,6 +1,4 @@
-#!/bin/zsh
-
-# This speeds up pasting w/ autosuggest
+# This speeds up pasting with autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
 
 pasteinit() {

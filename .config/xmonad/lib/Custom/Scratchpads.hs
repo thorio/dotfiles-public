@@ -37,7 +37,7 @@ musicPlayer = NS "musicPlayer" spawn find manage
 iotPanel :: NamedScratchpad
 iotPanel = NS "iotPanel" spawn find manage
     where
-        spawn = "rism --title hass-panel https://hass.chirality.de/lovelace?kiosk"
+        spawn = "WEBKIT_DISABLE_DMABUF_RENDERER=0 rism --title hass-panel https://hass.chirality.de/lovelace?kiosk"
         find = title =? "hass-panel"
         manage = centered 0.39 0.5
 

@@ -1,0 +1,21 @@
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"shardulm94.trailing-spaces",
+				"haskell.haskell",
+				"redhat.ansible",
+				"tamasfe.even-better-toml"
+			]
+		}
+	},
+	"workspaceFolder": "/home/user/.config",
+	"workspaceMount": "source=${localWorkspaceFolder}/,target=/home/user/.config/,type=bind",
+	"runArgs": [
+		"-v", "${localEnv:HOME}/.zshenv:/home/user/.zshenv:ro",
+		"-v", "${localEnv:HOME}/.local/bin/:/home/user/.local/bin/:rw"
+	]
+}

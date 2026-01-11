@@ -1,6 +1,7 @@
 /*
 !/.gitignore
 
+!/.devcontainer
 !/ahk
 !/alacritty
 !/box
