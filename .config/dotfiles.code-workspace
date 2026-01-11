@@ -4,6 +4,10 @@
 			"path": ".",
 			"name": "~/.config",
 		},
+		{
+			"path": "../.local/bin",
+			"name": "~/.local/bin",
+		}
 	],
 	"settings": {
 		"files.exclude": {

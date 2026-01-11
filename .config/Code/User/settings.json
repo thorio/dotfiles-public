@@ -102,6 +102,16 @@
 	},
 	//#endregion
 
+	//#region langspecific
+	"rust-analyzer.completion.autoimport.exclude": [
+		{
+			// hide annoying blanket impls
+			"path": "owo_colors::OwoColorize",
+			"type": "methods"
+		}
+	],
+	//#endregion
+
 	//#region behaviour
 	"editor.gotoLocation.multipleDeclarations": "goto",
 	"editor.gotoLocation.multipleDefinitions": "goto",
@@ -161,6 +171,7 @@
 	"window.menuBarVisibility": "hidden",
 	"iconify.annotations": false,
 	"redhat.telemetry.enabled": false,
+	"ansible.lightspeed.enabled": false,
 	//#endregion
 
 	//#region de-shittify

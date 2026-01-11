@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 autoload zkbd
 
 file="$ZDOTDIR/.zkbd/$TERM-$VENDOR-$OSTYPE"

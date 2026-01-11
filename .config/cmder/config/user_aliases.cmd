@@ -6,7 +6,7 @@
 ;= Add aliases below here
 
 ;= rem cmder defaults
-e.=explorer .
+fm=explorer .
 pwd=cd
 clear=cls
 unalias=alias /d $1

@@ -1,10 +1,8 @@
-#!/bin/zsh
+export ADOTDIR=$XDG_DATA_HOME/zsh/antigen
 
-source $ZSH_COMPONENT/external/antigen.zsh
+source $ZDOTDIR/external/antigen.zsh
 
 antigen use oh-my-zsh
-
-antigen bundle $ZDOTDIR/custom themes/custom.zsh-theme --no-local-clone
 
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions

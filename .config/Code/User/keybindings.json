@@ -120,5 +120,21 @@
         "key": "ctrl+shift+q",
         "command": "workbench.action.quickOpenNavigatePreviousInViewPicker",
         "when": "inQuickOpen && inViewsPicker"
+    },
+    {
+        "key": "ctrl+k ctrl+s",
+        "command": "-workbench.action.openGlobalKeybindings"
+    },
+    {
+        "key": "ctrl+k ctrl+s",
+        "command": "workbench.action.openGlobalKeybindingsFile"
+    },
+    {
+        "key": "ctrl+,",
+        "command": "-workbench.action.openSettings"
+    },
+    {
+        "key": "ctrl+,",
+        "command": "workbench.action.openSettingsJson"
     }
 ]
