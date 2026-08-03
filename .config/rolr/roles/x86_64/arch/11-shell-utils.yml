@@ -17,6 +17,8 @@
           - dos2unix
           - ncdu
           - tmux
+          - nmap
+          - aria2
 
     - name: install AUR packages
       become: true

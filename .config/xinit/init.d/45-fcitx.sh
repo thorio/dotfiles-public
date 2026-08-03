@@ -3,5 +3,6 @@ if hascommand fcitx5; then
 	export QT_IM_MODULE=fcitx
 	export XMODIFIERS=@im=fcitx
 
-	fcitx5 &
+	# https://github.com/alacritty/alacritty/issues/8907
+	# fcitx5 &
 fi

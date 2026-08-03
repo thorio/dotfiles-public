@@ -1,0 +1,7 @@
+# Managed by rolr
+
+[Desktop Entry]
+Name=Taurine Full
+Exec=vmrun game -c full -g passthrough -s --glass
+Terminal=true
+Type=Application

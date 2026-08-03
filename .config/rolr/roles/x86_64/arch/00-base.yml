@@ -18,6 +18,7 @@
         pkg:
           - inetutils
           - net-tools
+          - bind
           - pacman-contrib
           - reflector
           - vim

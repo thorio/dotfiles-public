@@ -29,4 +29,4 @@ color :: String -> String -> String
 color c = xmobarColor c ""
 
 transformTitle :: String -> String
-transformTitle = color "#8abeb7" . shorten 60
+transformTitle = color "#8abeb7" . shorten 100

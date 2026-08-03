@@ -10,6 +10,7 @@
       pacman:
         pkg:
           - xf86-video-intel
+          - nvtop
 
     - name: configure xorg
       become: true

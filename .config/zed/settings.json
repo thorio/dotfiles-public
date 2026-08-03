@@ -1,0 +1,166 @@
+{
+	// formatting
+	"hard_tabs": true,
+	"tab_size": 4,
+	"format_on_save": "off",
+
+	"soft_wrap": null,
+	"languages": {
+		"Rust": {
+			"format_on_save": "on",
+		},
+		"JSON": {
+			"format_on_save": "on",
+		},
+		"JSONC": {
+			"format_on_save": "on",
+		},
+		"YAML": {
+			"hard_tabs": false,
+			"tab_size": 2,
+		},
+		"Ansible": {
+			"hard_tabs": false,
+			"tab_size": 2,
+		},
+	},
+
+	// appearance
+	"icon_theme": {
+		"mode": "dark",
+		"light": "Material Icon Theme",
+		"dark": "Material Icon Theme",
+	},
+	"theme": {
+		"mode": "dark",
+		"light": "One Light",
+		"dark": "VSCode Dark Polished",
+	},
+	"experimental.theme_overrides": {
+		"syntax": {
+			"comment.doc": { "font_style": "normal" },
+		},
+
+		// from alacritty
+		"terminal.dim_foreground": "#6272A4FF",
+		"terminal.ansi.black": "#1d1f21",
+		"terminal.ansi.red": "#cc6666",
+		"terminal.ansi.green": "#b5bd68",
+		"terminal.ansi.yellow": "#f0c674",
+		"terminal.ansi.blue": "#81a2be",
+		"terminal.ansi.magenta": "#b294bb",
+		"terminal.ansi.cyan": "#8abeb7",
+		"terminal.ansi.white": "#c5c8c6",
+		"terminal.ansi.bright_black": "#666666",
+		"terminal.ansi.bright_red": "#d54e53",
+		"terminal.ansi.bright_green": "#b9ca4a",
+		"terminal.ansi.bright_yellow": "#e7c547",
+		"terminal.ansi.bright_blue": "#7aa6da",
+		"terminal.ansi.bright_magenta": "#c397d8",
+		"terminal.ansi.bright_cyan": "#70c0b1",
+		"terminal.ansi.bright_white": "#eaeaea",
+		"terminal.ansi.dim_black": "#131415",
+		"terminal.ansi.dim_red": "#864343",
+		"terminal.ansi.dim_green": "#777c44",
+		"terminal.ansi.dim_yellow": "#9e824c",
+		"terminal.ansi.dim_blue": "#556a7d",
+		"terminal.ansi.dim_magenta": "#75617b",
+		"terminal.ansi.dim_cyan": "#5b7d78",
+		"terminal.ansi.dim_white": "#828482",
+	},
+
+	"ui_font_size": 17.0,
+	"buffer_font_size": 17.0,
+	"buffer_font_features": {
+		"liga": false,
+		"calt": false,
+	},
+
+	"show_whitespaces": "boundary",
+	"cursor_blink": false,
+
+	"terminal": {
+		"cursor_shape": "bar",
+	},
+
+	// behaviour
+	"autosave": "off",
+	"auto_indent": "preserve_indent",
+	"cli_default_open_behavior": "existing_window",
+	"double_click_in_multibuffer": "open",
+	"session": { "trust_all_worktrees": true },
+
+	"diagnostics": {
+		"inline": {
+			"enabled": true,
+			"max_severity": "warning",
+		},
+	},
+
+	// uhh
+	"project_panel": {
+		"button": false,
+		"dock": "left",
+	},
+	"git": {
+		"inline_blame": {
+			"enabled": false,
+		},
+	},
+
+	"file_scan_exclusions": ["**/.git"],
+
+	// extensions
+	"auto_install_extensions": {
+		"material-icon-theme": true,
+		"vscode-dark-polished": true,
+		//
+		"ansible": true,
+		"basher": true,
+		"docker-compose": true,
+		"dockerfile": true,
+		"editorconfig": true,
+		"git-firefly": true,
+		"haskell": true,
+		"html": true,
+		"ini": true,
+		"scss": true,
+		"toml": true,
+		"vue": true,
+		"xml": true,
+	},
+
+	"lsp": {
+		"rust-analyzer": {
+			"initialization_options": {
+				"check": { "command": "clippy" },
+				"references": { "excludeImports": true },
+				"assist": { "preferSelf": true },
+				"workspace": {
+					"symbol": { "search": { "excludeImports": true } },
+				},
+			},
+		},
+	},
+
+	// disable dumb shit
+	"auto_update": false,
+	"disable_ai": true,
+	"telemetry": {
+		"diagnostics": false,
+		"metrics": false,
+	},
+	"outline_panel": { "button": false },
+	"search": { "button": false },
+	"git_panel": { "button": false },
+	"collaboration_panel": { "button": false },
+	"title_bar": {
+		"show_user_picture": false,
+		"show_user_menu": false,
+		"show_branch_name": false,
+		"show_project_items": false,
+		"show_onboarding_banner": false,
+		"show_menus": false,
+		"show_sign_in": false,
+	},
+}

@@ -1,0 +1,11 @@
+{
+	"file_scan_exclusions": [
+		"xmonad/**/*.{hi,o}",
+		"xmonad/lib",
+		"zsh/**/*.antigen-compat",
+		"zsh/**/*.zwc",
+	],
+	"file_types": {
+		"Ansible": ["**/rolr/**/*.yml"],
+	},
+}

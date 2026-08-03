@@ -7,7 +7,7 @@
   tasks:
     # check if there's already a different nvidia driver package installed
     - name: check if nvidia drivers are installed
-      command: pacman --deptest nvidia
+      command: pacman --deptest NVIDIA_MODULE
       changed_when: false
       failed_when: false
       register: check_nvidia
@@ -17,13 +17,13 @@
       become: true
       pacman:
         pkg:
-          - nvidia
+          - nvidia-open
 
-    - name: install nvidia-utils
+    - name: install extra packages
       become: true
       pacman:
         pkg:
-          - nvidia-utils
+          - nvtop
 
     - name: check if multilib repository is enabled
       command: pacman -Sl multilib

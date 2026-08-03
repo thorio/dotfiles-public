@@ -1,0 +1,7 @@
+# Managed by rolr
+
+[Desktop Entry]
+Name=Novalectra
+Exec=vmrun work -c full -g passthrough -s --glass
+Terminal=true
+Type=Application

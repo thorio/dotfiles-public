@@ -1,5 +1,5 @@
 ---
-# docker and docker-compose
+# docker and docker compose
 
 - name: docker
   gather_facts: false

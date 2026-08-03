@@ -19,6 +19,7 @@
           - autorandr
           - xmonad
           - xmonad-contrib
+          - haskell-regex
           - xmobar
           - dmenu
           - slock

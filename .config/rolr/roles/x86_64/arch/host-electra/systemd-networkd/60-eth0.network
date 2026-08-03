@@ -1,0 +1,6 @@
+# Managed by rolr
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4

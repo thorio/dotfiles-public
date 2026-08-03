@@ -1,0 +1,2 @@
+# Managed by rolr
+KERNEL=="zd*" SUBSYSTEM=="block" ACTION=="add|change" PROGRAM="/lib/udev/zvol_id /dev/%k" RESULT=="storage/vm/win1[01]-sandbox" GROUP="thorou"

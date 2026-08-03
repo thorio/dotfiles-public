@@ -2,6 +2,7 @@
 !/.gitignore
 
 !/.devcontainer
+!/.zed
 !/ahk
 !/alacritty
 !/box
@@ -27,6 +28,7 @@
 !/xmodmap
 !/xmonad
 !/zsh
+!/zed
 
 !/.env
 !/desktop-default.png

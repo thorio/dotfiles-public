@@ -1,0 +1,11 @@
+---
+# software development applications
+
+- name: desktop-development
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: install flatpak applications
+      flatpak:
+        name:
+          - com.usebruno.Bruno

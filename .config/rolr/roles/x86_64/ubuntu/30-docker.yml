@@ -1,5 +1,5 @@
 ---
-# docker and docker-compose
+# docker and docker compose
 
 - name: docker
   gather_facts: true
@@ -31,13 +31,6 @@
           - docker-ce
           - docker-ce-cli
           - containerd.io
-
-    - name: install/update docker-compose
-      become: true
-      get_url:
-        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
-        dest: /usr/local/bin/docker-compose
-        mode: "755"
 
     - name: get current user
       command: whoami

@@ -1,0 +1,7 @@
+# Managed by rolr
+
+[Desktop Entry]
+Name=Windows 11 Sandbox
+Exec=env NOROOT=1 vmrun sandbox11 -s
+Terminal=true
+Type=Application

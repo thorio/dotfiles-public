@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -z "${VMRUN_BOOTSTRAP:-}" ]; then
+	export VMRUN_BOOTSTRAP=1
+	exec tmux new -s vm "vmrun $*"
+fi
+
+if [ -z "$NOROOT" ]; then
+	sudo -v
+fi
+
+tmux detach
+
+args=$*
+
+if [[ "$args" == *"--glass"* ]]; then
+	args=${args/--glass/}
+	$(sleep 2; looking-glass-client -F &> /dev/null) &
+else
+	$(sleep 2; remmina -c spice://localhost --enable-fullscreen &> /dev/null) &
+fi
+
+if [ -z "$NOROOT" ]; then
+	sudo ~/repos/vfio-run/target/debug/vfio-run run $args
+else
+	~/repos/vfio-run/target/debug/vfio-run run $args
+fi
+
+kill %1

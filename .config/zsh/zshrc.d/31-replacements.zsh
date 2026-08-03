@@ -16,6 +16,13 @@ elif hascommand batcat; then
 	alias cat='batcat -p'
 fi
 
+# delta/diff
+if hascommand delta; then
+	alias diff="delta"
+elif hascommand diff; then
+	alias diff="diff --color"
+fi
+
 # interactive history search when not piped
 history() {
 	if [ -t 1 ] && hascommand fzf; then

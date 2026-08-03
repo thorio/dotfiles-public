@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+set -eEuo pipefail
+
+bail() {
+	status_err "$@"
+	exit 1
+}
+
+status() {
+	printf "\x1b[1;34msysupgrade: $@\x1b[1;0m\n"
+}
+
+status_err() {
+	printf "\x1b[1;31msysupgrade: $@\x1b[1;0m\n"
+}
+
+hascommand() {
+	command -v $1 &> /dev/null
+}
+
+# ////////////////////////////////////////////////////
+
+
+: "${SYSUPGRADE_BOOT_PATH:=/boot}"
+: "${SYSUPGRADE_BOOTMIRROR_PATH:=/run/bootmirror}"
+: "${SYSUPGRADE_USE_BOOTMIRROR:=true}"
+
+snapper_configs_was_default=$(if [ "${SYSUPGRADE_SNAPPER_CONFIGS:-}" = "" ]; then echo true; fi)
+: "${SYSUPGRADE_USE_SNAPPER:=true}"
+: "${SYSUPGRADE_SNAPPER_CONFIGS:="root boot"}"
+
+use_bootmirror=$(if [ "$SYSUPGRADE_USE_BOOTMIRROR" = true -a -d "$SYSUPGRADE_BOOTMIRROR_PATH" ]; then echo true; fi)
+use_snapper=$(if [ "$SYSUPGRADE_USE_SNAPPER" = true ] && hascommand snapper; then echo true; fi)
+
+# ////////////////////////////////////////////////////
+
+print_usage() {
+	cat <<EOF
+commands:
+  run                runs the upgrade
+  bootbak            syncs $SYSUPGRADE_BOOT_PATH to $SYSUPGRADE_BOOTMIRROR_PATH
+  help               prints this message
+EOF
+}
+
+sync_bootmirror() {
+	if [ "$use_bootmirror" = true ]; then
+		status "syncing bootmirror...";
+		sudo rsync --archive --delete --inplace --no-compress --info=progress2 "$SYSUPGRADE_BOOT_PATH" "$SYSUPGRADE_BOOTMIRROR_PATH" --exclude='.snapshots'
+	fi
+}
+
+snapper_has_config() {
+	snapper -c $1 get-config &> /dev/null || return 1
+}
+
+snapper_create() {
+	snapper_cfg=$1
+	shift
+
+	snapper -c $snapper_cfg create -c timeline "$@"
+}
+
+snapper_create_pre() {
+	snapper_pre_snapshots=""
+
+	for snapper_cfg in $SYSUPGRADE_SNAPPER_CONFIGS; do
+		if ! snapper_has_config $snapper_cfg; then
+			[ "$snapper_configs_was_default" = true ] || bail "invalid snapper config specified: $snapper_cfg"
+			continue
+		fi
+
+		status "creating snapper pre snapshot for config $snapper_cfg"
+		pre_number=$(snapper_create $snapper_cfg -d sysupgrade -pt pre)
+
+		snapper_pre_snapshots+=" $snapper_cfg:$pre_number"
+	done
+}
+
+snapper_create_post() {
+	status=$1
+	for snapshot in $snapper_pre_snapshots; do
+		snapper_cfg=${snapshot%:*}
+		pre_number=${snapshot##*:}
+
+		status "creating snapper post snapshot for config $snapper_cfg"
+		snapper_create $snapper_cfg -d "sysupgrade $status" -t post --pre-number $pre_number
+	done
+}
+
+run_upgrade() {
+	if hascommand aura; then
+		aura -Syu
+		aura -Auc
+	elif hascommand pacman; then
+		sudo pacman -Syu
+	fi
+
+	if hascommand apt; then
+		sudo apt update && sudo apt list --upgradeable && sudo apt upgrade --autoremove
+	fi
+
+	if hascommand xmonad; then
+		xmonad --recompile
+	fi
+
+	if hascommand flatpak; then
+		flatpak update && flatpak remove --unused
+	fi
+
+	if hascommand dot; then
+		dot pull
+	fi
+
+	if hascommand rolr; then
+		rolr update
+	fi
+
+	if hascommand blent; then
+		blent update -ap
+	fi
+}
+
+pre_upgrade() {
+	sync_bootmirror
+	snapper_create_pre
+}
+
+post_upgrade() {
+	status=$1
+
+	sync_bootmirror
+	snapper_create_post $status
+}
+
+main() {
+	status "running pre-transaction hooks"
+	pre_upgrade
+
+	_err() {
+		status_err "ERROR, running post-transaction hooks"
+		post_upgrade error
+		exit 1
+	}
+
+	trap '_err' ERR SIGINT
+
+	status "running upgrade"
+	run_upgrade
+
+	trap - ERR SIGINT
+
+	status "running post-transaction hooks"
+	post_upgrade ok
+}
+
+# ////////////////////////////////////////////////////
+
+case ${1:-} in
+	run)
+		main
+		;;
+	bootbak)
+		[ "$use_bootmirror" = true ] || bail "'$SYSUPGRADE_BOOTMIRROR_PATH' does not exist"
+		sync_bootmirror
+		;;
+	help | "")
+		print_usage
+		;;
+	*)
+		echo "unrecognized subcommand '$1'"
+		print_usage
+		;;
+esac

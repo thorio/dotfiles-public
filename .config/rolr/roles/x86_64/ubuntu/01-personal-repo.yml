@@ -1,25 +1,20 @@
 ---
-# personal repository; https://thorio.github.io/apt/
+# personal repository; https://forge.chirality.de/thorou/-/packages?q=&type=debian
 
 - name: personal-repo
   gather_facts: false
   hosts: all
   tasks:
-    - name: get architecture
-      command: dpkg --print-architecture
-      register: architecture
-      changed_when: false
-
-    - name: add thorio signing key
+    - name: add thorou signing key
       become: true
       get_url:
-        url: "https://thorio.github.io/apt/gpg"
-        dest: /etc/apt/keyrings/thorio-personal-repo.asc
+        url: "https://forge.chirality.de/api/packages/thorou/debian/repository.key"
+        dest: /etc/apt/keyrings/thorou-personal-repo.asc
         mode: "644"
 
-    - name: Add thorio repository to apt sources
+    - name: Add thorou repository to apt sources
       become: true
       apt_repository:
-        filename: thorio-personal-repo
-        repo: deb [arch={{ architecture.stdout }} signed-by=/etc/apt/keyrings/thorio-personal-repo.asc] https://thorio.github.io/apt/debian generic main
+        filename: thorou-personal-repo
+        repo: deb [signed-by=/etc/apt/keyrings/thorou-personal-repo.asc] https://forge.chirality.de/api/packages/thorou/debian generic main
         update_cache: true

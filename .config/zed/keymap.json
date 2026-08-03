@@ -1,0 +1,33 @@
+[
+	{
+		// context: global
+		"unbind": {
+			"ctrl-alt-,": "zed::OpenSettingsFile",
+			"ctrl-w": "workspace::CloseActiveDock",
+		},
+		"bindings": {
+			"ctrl-,": "zed::OpenSettingsFile",
+		},
+	},
+	{
+		"context": "Editor",
+		"unbind": {
+			"ctrl-.": "editor::ToggleCodeActions",
+		},
+		"bindings": {
+			"alt-enter": "editor::ToggleCodeActions",
+			"ctrl-d": "editor::DuplicateLineDown",
+			"f10": "debugger::StepOver",
+			"f12": "editor::GoToDeclaration",
+			"shift-f12": "editor::FindAllReferences",
+			"ctrl-f12": "editor::GoToImplementation",
+		},
+	},
+	{
+		"context": "ProjectPanel",
+		"bindings": {
+			"ctrl-w": ["workspace::SendKeystrokes", "ctrl-k ctrl-right ctrl-w"],
+		},
+	},
+	////
+]

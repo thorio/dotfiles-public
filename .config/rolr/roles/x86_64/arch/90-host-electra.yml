@@ -11,7 +11,10 @@
         pkg:
           - ddcutil
           - amd-ucode
-          - qt6-multimedia-ffmpeg # for hydrus
+
+          # for hydrus
+          - qt6-multimedia-ffmpeg
+          - python-pillow-jpegxl-plugin
 
     - name: install AUR packages
       become: true
@@ -19,9 +22,8 @@
         pkg:
           - hydrus
           - anki-bin
-          - grayjay-bin
           - opentabletdriver
-          - osu-lazer-bin
+          - electron40-bin # for vesktop
           - vesktop-bin
 
     - name: install flatpak applications
@@ -50,11 +52,13 @@
         dest: /etc/X11/xorg.conf.d/20-rolr-display.conf
         state: link
 
-    - name: set ethernet link configuration
+    - name: configure systemd-networkd
       become: true
       copy:
-        src: ./host-electra/network.link
-        dest: /etc/systemd/network/50-wired.link
+        src: "{{ item }}"
+        dest: /etc/systemd/network/
+      with_fileglob:
+        - ./host-electra/systemd-networkd/*
 
     # pipewire/wireplumber config
     - name: check if pipewire and wireplumber are installed
@@ -89,15 +93,22 @@
         - pipewire
         - wireplumber
 
-    - name: copy vfio desktop files
+    - name: install desktop files
       copy:
-        src: ./host-electra/{{ item }}
+        src: "{{ item }}"
         dest: ~/.local/share/applications/
         mode: "755"
-      loop:
-        - taurine-full.desktop
-        - taurine-slim.desktop
-        - novalectra.desktop
+      with_fileglob:
+        - ./host-electra/desktop/*
+
+    - name: install udev rules
+      become: true
+      copy:
+        src: "{{ item }}"
+        dest: /etc/udev/rules.d/
+        mode: "755"
+      with_fileglob:
+        - ./host-electra/udev/*
 
     - name: install systemd units
       become: true
@@ -114,7 +125,9 @@
         enabled: true
       loop:
         - rolr-host-electra-switch-source.service
+        - systemd-networkd.service
         - zfs-scrub-monthly@storage.timer
+        - zfs-trim-weekly@storage.timer
         - zfs-trim-weekly@storage.timer
 
     - name: apply zfs kernel parameters

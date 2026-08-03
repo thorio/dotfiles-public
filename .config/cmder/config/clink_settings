@@ -1,7 +1,27 @@
+# name: Show a suggestion in a muted color
+# type: boolean
+autosuggest.inline = True
+
 # name: Strips CR and LF chars on paste
 # type: enum
 # options: delete,space,ampersand,crlf
 clink.paste_crlf = space
+
+# name: Match executables in current directory
+# type: boolean
+exec.cwd = False
+
+# name: Include directories
+# type: boolean
+exec.dirs = True
+
+# name: Match executables in PATH
+# type: boolean
+exec.path = True
+
+# name: Whitespace prefix matches files
+# type: boolean
+exec.space_prefix = True
 
 # name: Skip adding lines prefixed with whitespace
 # type: boolean
@@ -14,14 +34,3 @@ history.max_lines = 10000
 # name: Support Windows' Ctrl-Alt substitute for AltGr
 # type: boolean
 terminal.use_altgr_substitute = True
-
-
-
-exec.cwd = 1
-
-exec.dirs = 1
-
-exec.path = 1
-
-exec.space_prefix = 1
-

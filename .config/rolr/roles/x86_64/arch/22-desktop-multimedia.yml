@@ -11,7 +11,6 @@
         pkg:
           - mkvtoolnix-gui
           - handbrake
-          - avidemux-qt
           - yt-dlp
           - audacity
           - kdenlive
@@ -21,9 +20,15 @@
           - obs-studio
           - inkscape
           - picard
+          - gimp
 
     - name: install AUR packages
       become: true
       aura:
         pkg:
           - mkvextract-gtk
+
+    - name: install flatpak applications
+      flatpak:
+        name:
+          - org.avidemux.Avidemux

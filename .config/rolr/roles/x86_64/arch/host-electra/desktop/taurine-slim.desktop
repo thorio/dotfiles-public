@@ -2,6 +2,6 @@
 
 [Desktop Entry]
 Name=Taurine Slim
-Exec=sh -c 'sudo ~/repos/vfio-run/target/debug/vfio-run run game -sw'
+Exec=vmrun game -s
 Terminal=true
 Type=Application

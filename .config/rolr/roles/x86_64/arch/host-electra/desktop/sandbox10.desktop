@@ -1,0 +1,7 @@
+# Managed by rolr
+
+[Desktop Entry]
+Name=Windows 10 Sandbox
+Exec=env NOROOT=1 vmrun sandbox10 -s
+Terminal=true
+Type=Application

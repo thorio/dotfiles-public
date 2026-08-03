@@ -14,5 +14,6 @@ antigen bundle jirutka/zsh-shift-select
 
 antigen apply
 
+ZSHZ_KEEP_DIRS=( /mnt /media)
 ZSH_AUTOSUGGEST_STRATEGY=(history)
 bindkey '^ ' autosuggest-accept

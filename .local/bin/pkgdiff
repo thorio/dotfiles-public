@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${XDG_DATA_HOME:=$HOME/.local/share}"
+: "${PKGSTATE_PATH:=$XDG_DATA_HOME/pkgstate.txt}"
+
+# ////////////////////////////////////////////////////
+
+bail() {
+	echo $@
+	exit 1
+}
+
+hascommand() {
+	command -v $1 &> /dev/null
+}
+
+if hascommand pacman; then
+	list_packages() {
+		pacman -Qeq
+	}
+elif hascommand apt-mark; then
+	list_packages() {
+		apt-mark showmanual
+	}
+fi
+
+print_usage() {
+	cat <<EOF
+commands:
+  <none>             compares installed packages to saved list
+  commit             saves current package list
+  help               prints this message
+EOF
+}
+
+# ////////////////////////////////////////////////////
+
+hascommand list_packages || bail "no compatible package manager found"
+
+mkdir -p $(dirname "$PKGSTATE_PATH")
+touch "$PKGSTATE_PATH"
+
+case ${1:-} in
+	commit)
+		list_packages > "$PKGSTATE_PATH"
+		;;
+	"")
+		diff "$PKGSTATE_PATH" <(list_packages)
+		;;
+	help)
+		print_usage
+		;;
+	*)
+		echo "unrecognized subcommand '$1'"
+		print_usage
+		;;
+esac

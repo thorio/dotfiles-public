@@ -5,7 +5,7 @@
   gather_facts: false
   hosts: all
   tasks:
-    - name: check if pipewire is installed
+    - name: ensure pipewire is installed
       command: which pipewire
       changed_when: false
 
@@ -25,6 +25,7 @@
           - libreoffice-still
           - filezilla
           - torbrowser-launcher
+          - zed
 
     - name: install flatpak applications
       flatpak:
@@ -32,6 +33,7 @@
           - com.github.tchx84.Flatseal
           - com.plexamp.Plexamp
           - tv.plex.PlexDesktop
+          - me.proton.Mail
 
     - name: install librewolf gpg key
       command: gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 662E3CDD6FE329002D0CA5BB40339DD82B12EF16
@@ -44,7 +46,6 @@
         pkg:
           - librewolf-bin
           - schildichat-desktop-bin
-          - visual-studio-code-bin
           - github-desktop-bin
 
     # stupid fix for flatpak not mounting system themes

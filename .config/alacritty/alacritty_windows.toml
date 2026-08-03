@@ -4,6 +4,11 @@ import = ["~/.config/alacritty/alacritty.toml"]
 [font]
 size = 10.5
 
+[keyboard]
+bindings = [
+        { key = "Backspace", mods = "Control", chars = "\u0017" }
+]
+
 [terminal.shell]
 program = "cmd"
 args = ["/k", "C:/dev/cmder/vendor/init.bat"]

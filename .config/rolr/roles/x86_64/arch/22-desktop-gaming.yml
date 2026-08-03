@@ -27,4 +27,14 @@
       aura:
         pkg:
           - heroic-games-launcher-bin
-          - protonup-qt-bin
+
+    - name: install flatpak applications
+      flatpak:
+        name:
+          - com.vysp3r.ProtonPlus
+
+    - name: enable ntsync
+      become: true
+      modprobe:
+        name: ntsync
+        persistent: present
