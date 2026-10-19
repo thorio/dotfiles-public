@@ -3,9 +3,9 @@
 		"xmonad/**/*.{hi,o}",
 		"xmonad/lib",
 		"zsh/**/*.antigen-compat",
-		"zsh/**/*.zwc",
+		"zsh/**/*.zwc"
 	],
 	"file_types": {
-		"Ansible": ["**/rolr/**/*.yml"],
-	},
+		"Ansible": ["**/rolr/**/*.yml"]
+	}
 }

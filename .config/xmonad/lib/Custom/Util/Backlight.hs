@@ -75,7 +75,7 @@ ddcutil bus args = runProcessWithInput "ddcutil" args' ""
 alert :: X ()
 alert = do
     a <- ddcutil vpcBusPrimary ["--brief", "getvcp", vcpBrightness]
-    Alert.push ("<fn=1>\xf5dd</fn> " ++ formatAlert a) 2
+    Alert.push ("<fn=1>\xf00de</fn> " ++ formatAlert a) 2
     where
         formatAlert s = words s !! 3 ++ "%"
 

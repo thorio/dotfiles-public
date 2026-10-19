@@ -37,7 +37,7 @@ musicPlayer = NS "musicPlayer" spawn find manage
 iotPanel :: NamedScratchpad
 iotPanel = NS "iotPanel" spawn find manage
     where
-        spawn = "WEBKIT_DISABLE_DMABUF_RENDERER=0 rism --title hass-panel https://hass.chirality.de/lovelace?kiosk"
+        spawn = "rism --title hass-panel https://hass.chirality.de/lovelace?kiosk"
         find = title =? "hass-panel"
         manage = centered 0.39 0.5
 
@@ -53,7 +53,7 @@ notes :: NamedScratchpad
 notes = NS "notes" spawn find manage
     where
         spawn = "obsidian"
-        find = className =? "obsidian"
+        find = className =? "md.obsidian.Obsidian"
         manage = centered 0.98 0.98
 
 ------------------------------------------------------------------------
@@ -75,4 +75,3 @@ centeredPixels' w h r = centered sw sh
 
 curScreenSize :: Query Rectangle
 curScreenSize = liftX $ withWindowSet $ return . screenRect . W.screenDetail . W.current
-

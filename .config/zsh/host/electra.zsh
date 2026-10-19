@@ -3,7 +3,7 @@ x() {
 	local conf=~/.local/share/X11/display.conf
 	echo "" > $conf
 
- 	read -r -d '' nvidia <<- EOF
+	read -r -d '' nvidia <<- EOF
 Section "Device"
 	Identifier "dGPU"
 	Driver	"nvidia"
@@ -12,7 +12,7 @@ Section "Device"
 EndSection
 EOF
 
- 	read -r -d '' amdgpu <<- EOF
+	read -r -d '' amdgpu <<- EOF
 Section "Device"
 	Identifier "iGPU"
 	Driver "modesetting"
@@ -66,7 +66,7 @@ EOF
 VFIO_RUN_PATH=~/repos/vfio-run/target/debug/vfio-run
 alias v="sudo $VFIO_RUN_PATH"
 
-alias vd='v detach game -g passthrough'
+alias vd='killall plexamp; v detach game -g passthrough'
 alias va='v attach game -g passthrough'
 
 # misc

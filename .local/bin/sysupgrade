@@ -91,7 +91,7 @@ snapper_create_post() {
 run_upgrade() {
 	if hascommand aura; then
 		aura -Syu
-		aura -Auc
+		aura -Auck --hotedit
 	elif hascommand pacman; then
 		sudo pacman -Syu
 	fi

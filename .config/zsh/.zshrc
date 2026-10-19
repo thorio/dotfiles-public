@@ -3,6 +3,8 @@ source $HOME/.config/.env
 
 ZSHZ_DATA="$XDG_DATA_HOME/zsh/z"
 HISTFILE="$XDG_DATA_HOME/zsh/history"
+ZSH_CUSTOM=$ZDOTDIR
+ZSH_THEME="lambda"
 
 path+=("$HOME/.local/bin")
 

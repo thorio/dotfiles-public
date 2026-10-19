@@ -23,7 +23,7 @@ toggleMute = pamixerSet ["--toggle-mute"] >> alert
 alert :: X ()
 alert = do
     a <- runProcessWithInput "pamixer" ["--get-volume", "--get-mute"] ""
-    Alert.push ("<fn=1>\xfa7d</fn> " ++ formatAlert a) 2
+    Alert.push ("<fn=1>\xf057e</fn> " ++ formatAlert a) 2
 
 ------------------------------------------------------------------------
 

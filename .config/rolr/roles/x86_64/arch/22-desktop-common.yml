@@ -26,6 +26,7 @@
           - filezilla
           - torbrowser-launcher
           - zed
+          - librewolf
 
     - name: install flatpak applications
       flatpak:
@@ -35,16 +36,10 @@
           - tv.plex.PlexDesktop
           - me.proton.Mail
 
-    - name: install librewolf gpg key
-      command: gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 662E3CDD6FE329002D0CA5BB40339DD82B12EF16
-      register: librewolf_gpg
-      changed_when: '"imported: " in librewolf_gpg.stderr'
-
     - name: install AUR packages
       become: true
       aura:
         pkg:
-          - librewolf-bin
           - schildichat-desktop-bin
           - github-desktop-bin
 

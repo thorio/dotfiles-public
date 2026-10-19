@@ -4,6 +4,7 @@
 		"unbind": {
 			"ctrl-alt-,": "zed::OpenSettingsFile",
 			"ctrl-w": "workspace::CloseActiveDock",
+			"ctrl-shift-b": "outline_panel::ToggleFocus",
 		},
 		"bindings": {
 			"ctrl-,": "zed::OpenSettingsFile",
@@ -16,6 +17,7 @@
 		},
 		"bindings": {
 			"alt-enter": "editor::ToggleCodeActions",
+			"ctrl-shift-b": "git::Blame",
 			"ctrl-d": "editor::DuplicateLineDown",
 			"f10": "debugger::StepOver",
 			"f12": "editor::GoToDeclaration",

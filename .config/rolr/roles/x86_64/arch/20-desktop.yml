@@ -34,6 +34,7 @@
           - fuse2 # for appimages
           - noto-fonts
           - noto-fonts-emoji
+          - ttf-hack-nerd
           - materia-gtk-theme
           - kvantum # theme engine so qt can use materia
           - kvantum-theme-materia
@@ -47,20 +48,3 @@
           - sunset-cursors-git
           - gravel-bin
           - rism-bin
-
-    - name: create xmonad cache dir
-      file:
-        path: ~/.cache/xmonad
-        state: directory
-
-    - name: create xmonad data dir
-      register: xmonad_data
-      file:
-        path: ~/.local/share/xmonad
-        state: directory
-
-    - name: refresh font cache
-      # technically incorrect; the relevant font is cloned with the dotfiles repo
-      # but close enough ¯\_(ツ)_/¯
-      when: xmonad_data.changed
-      command: fc-cache

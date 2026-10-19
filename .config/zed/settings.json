@@ -8,6 +8,7 @@
 	"languages": {
 		"Rust": {
 			"format_on_save": "on",
+			"remove_trailing_whitespace_on_save": false, // let rustfmt handle this
 		},
 		"JSON": {
 			"format_on_save": "on",
@@ -39,6 +40,7 @@
 	"experimental.theme_overrides": {
 		"syntax": {
 			"comment.doc": { "font_style": "normal" },
+			"variant": { "font_style": "normal" },
 		},
 
 		// from alacritty
@@ -130,14 +132,29 @@
 		"xml": true,
 	},
 
+	"semantic_tokens": "combined",
 	"lsp": {
 		"rust-analyzer": {
 			"initialization_options": {
-				"check": { "command": "clippy" },
 				"references": { "excludeImports": true },
 				"assist": { "preferSelf": true },
+				"check": {
+					"command": "clippy",
+					"extraArgs": ["--all-features"],
+				},
 				"workspace": {
 					"symbol": { "search": { "excludeImports": true } },
+				},
+				"completion": {
+					"autoimport": {
+						"exclude": [
+							{
+								// hide annoying blanket impls
+								"path": "owo_colors::OwoColorize",
+								"type": "methods",
+							},
+						],
+					},
 				},
 			},
 		},

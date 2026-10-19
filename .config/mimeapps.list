@@ -7,6 +7,7 @@ image/png=feh.desktop
 image/webp=feh.desktop
 image/svg+xml=feh.desktop
 image/jxl=feh.desktop
+image/avif=feh.desktop
 
 audio/aac=mpv.desktop
 audio/mpeg=mpv.desktop
@@ -17,6 +18,8 @@ audio/wav=mpv.desktop
 video/mp4=mpv.desktop
 video/x-matroska=mpv.desktop
 video/webm=mpv.desktop
+video/quicktime=mpv.desktop
+video/x-msvideo=mpv.desktop
 image/gif=mpv.desktop
 
 model/stl=OrcaSlicer.desktop
